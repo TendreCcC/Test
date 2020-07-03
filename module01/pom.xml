@@ -1,12 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>module01</artifactId>
-    <version>1.0-SNAPSHOT</version>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">  
+  <modelVersion>4.0.0</modelVersion>  
+  <groupId>com.itheima</groupId>  
+  <artifactId>module01</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <dependencies>
+    <dependency>
+      <!--在仓库中位置，
+      注：不要写错，如果写错在仓库中就找不到这个jar包，但本地仓库中又会生成一个错误的目录结构
+      有可能导致以后正确地址的jar包也下载不了，解决方法就是去本地仓库中找到这个错误的目录结构删除了
+      -->
+      <!--servlet-->
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <!--依赖范围-->
+      <scope>provided</scope>
+    </dependency>
+<!--junit-->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+    </dependency>
+<!--mybatis-->
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis</artifactId>
+      <version>3.4.5</version>
+    </dependency>
+<!--Mysql-->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.30</version>
+      <scope>runtime</scope>
+    </dependency>
+  <!--Bean Utils-->
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>1.9.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.pagehelper</groupId>
+      <artifactId>pagehelper</artifactId>
+      <version>5.1.10</version>
+    </dependency>
+   <!-- jackson-->
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.3.3</version>
+      </dependency>
+
+
+    <!--jedis-->
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <version>2.7.0</version>
+    </dependency>
+
+  </dependencies>
+  <build>
+    <plugins>
+      <!--Tomcat7插件-->
+      <plugin>
+        <!--插件在仓库中的坐标-->
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+        <!--插件配置dependencies-->
+        <configuration>
+          <!--端口号-->
+          <port>8080</port>
+          <!--项目的访问地址-->
+          <path>/</path>
+          <!--默认编码-->
+          <uriEncoding>UTF-8</uriEncoding>
+          <!--服务器名-->
+          <server>tomcat7</server>
+        </configuration>
+      </plugin>
+
+
+      <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+
+        <configuration>
+          <path>/</path> <!--项目访问路径。当前配置的访问是localhost:9090/, 如果配置是/aa，则访问路径为localhost:9090/aa -->
+          <port>8083</port>
+          <uriEncoding>UTF-8</uriEncoding><!-- 非必需项 -->
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+
 
 
 </project>
