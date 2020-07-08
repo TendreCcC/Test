@@ -1,5 +1,6 @@
 package com.itheima.utils;
 
+import com.itheima.service.CategoryService;
 import org.apache.ibatis.session.SqlSession;
 
 import java.lang.reflect.Proxy;
@@ -12,6 +13,7 @@ public class DaoInstanceFactory {
     /**
      * 返回接口的代理对象
      * @param daoInterface 被代理的DAO接口
+     * @return
      */
     public static <T> T getBean(Class<T> daoInterface) {
         return (T) Proxy.newProxyInstance(

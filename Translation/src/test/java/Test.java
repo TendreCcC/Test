@@ -1,19 +1,10 @@
-public class Test {
- private  int age;
- private  String name;
- private  int testint;
+import com.itheima.service.CategoryService;
 
- public Test(int age){
-     this.age=age;
- }
- public Test(int age,String name){
-     this.age=age;
-     this.name=name;
- }
- private  Test(String name){
-     this.name=name;
- }
- public Test(){
-     
+public class Test {
+ @org.junit.Test
+    public void testFindAll(){
+     CategoryService service = new CategoryService();
+     String all = service.FindAll();
+     System.out.println(all);
  }
 }

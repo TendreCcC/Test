@@ -8,7 +8,10 @@
     <typeAliases>
         <package name="com.itheima.entity"/>
     </typeAliases>
-
+<!--分页插件-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+    </plugins>
     <environments default="default">
         <!--环境变量-->
         <environment id="default">
