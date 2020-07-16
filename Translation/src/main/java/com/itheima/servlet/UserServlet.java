@@ -65,6 +65,7 @@ public class UserServlet extends BaseServlet {
         session.removeAttribute("vocde");
         if(!check.equals(vcode)){
             out.print("验证码错误");
+            session.removeAttribute("vocde");
         }else {//否则验证码正确然后调用service层的login
             try {
                 User user = service.login(username, password);
@@ -85,8 +86,10 @@ public class UserServlet extends BaseServlet {
      * @throws IOException
      */
     private void register(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/plain;charset=utf-8");
         HttpSession session = request.getSession();
         PrintWriter out = response.getWriter();
+
         //获取的是验证码里面的值
         String vcode = (String) session.getAttribute("vcode");//网页的验证码
         String check = request.getParameter("check");//用户输入的验证码

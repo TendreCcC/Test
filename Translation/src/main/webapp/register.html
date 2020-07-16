@@ -130,9 +130,11 @@
               if (result=="success"){
                   location.href="register_ok.html"
               }else {
-                      $("#Pic").attr("src", "code?time=" + new Date().getTime());
+                $("#Pic").attr("src", "code?time=" + new Date().getTime());
+                  $("#Pic").click();
+                  //$("#msg").text(result)
                   $("#msg").text(result)
-                  $("#check").select();
+                  //$("#check").select();
               }
              }
          })

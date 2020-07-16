@@ -21,8 +21,8 @@
             <a href="/"><img src="images/logo.jpg" alt=""></a>
         </div>
         <div class="search">
-            <input name="" type="text" placeholder="请输入路线名称" class="search_input" autocomplete="off">
-            <a href="javascript:;" class="search-button">搜索</a>
+            <input id="search" type="text" placeholder="请输入路线名称" class="search_input" autocomplete="off">
+            <a href="javascript:;" class="search-button" id="btnRname" >搜索</a>
         </div>
         <div class="hottel">
             <div class="hot_pic">
@@ -47,6 +47,13 @@
         //用户状态信息
         loadUserStatus();
         LoadCategory();
+
+        //搜索按钮的点击事件
+        $("#btnRname").click(function () {
+            let cid = getParameter("cid");
+            let rname=$("#search").val();
+            ChagePagername(cid,1,rname)
+        });
     });
 
     //加载用户的状态

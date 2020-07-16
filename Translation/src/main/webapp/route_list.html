@@ -66,8 +66,10 @@
 <script type="text/javascript">
     $(function () {
         let cid = getParameter("cid");
-        ChagePage(cid,1);
+        //ChagePage(cid,1);
+        ChagePagername(cid,1,"");
     });
+
     function ChagePage(cid,page) {
      $.get({
          url:"route",
@@ -114,6 +116,58 @@
          }
 
      });
+
+    }
+
+
+    function ChagePagername(cid,page,rname) {
+        $.get({
+            url:"route",
+            data:{
+                action:"FindByrname",
+                cid:cid,
+                page:page,
+                rname:rname
+            },
+            dataType:"json",
+            success:function (json) {
+                let html=``;
+                let routes = json.list;
+                /*因为返回回来的是一个list集合 所以这里用它进行遍历*/
+                for (let route of routes) {
+                    html+=`<li>
+                 <div class="img"><img src="${route.rimage}" alt=""></div>
+                     <div class="text1">
+                     <p>${route.rname}</p>
+                     <br/>
+                     <p>${route.routeIntroduce}</p>
+                 </div>
+                 <div class="price">
+                     <p class="price_num">
+                     <span>&yen;</span>
+                 <span>${route.price}</span>
+                 <span>起</span>
+                 </p>
+                 <p><a href="route_detail.html?rid=${route.rid}">查看详情</a></p>
+                 </div>
+                 </li>`;
+                }
+                $("#RouteBean").html(html);
+                $("div.page_num_inf").html(`<i></i> 共 <span>${json.pages}</span>页<span>${json.total}</span>条`)
+                /* 分页的插件*/
+                $("ul.pagination").jqPaginator({
+                    totalCounts:json.pages,
+                    pageSize:json.pageSize,
+                    currentPage:json.pageNum,
+                    onPageChange: function (num,type) {
+                        if (type=="change"){
+                            ChagePagername(cid,num,rname);
+                        }
+                    }
+                });
+            }
+
+        });
 
     }
 </script>

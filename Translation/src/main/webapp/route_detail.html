@@ -7,6 +7,8 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/common.css">
     <link rel="stylesheet" type="text/css" href="css/route-detail.css">
+    <script src="js/getParameter.js"></script>
+
 </head>
 
 <body>
@@ -22,40 +24,7 @@
         </div>
         <div class="prosum_box">
             <dl class="prosum_left">
-                <dt>
-                    <img alt="" class="big_img" src="http://www.jinmalvyou.com/Public/uploads/goods_img/img_size4/201703/m49788843d72171643297ccc033d9288ee.jpg">
-                </dt>
-                <dd>
-                    <a class="up_img up_img_disable"></a>
-                    <a title="" class="little_img" data-bigpic="http://www.jinmalvyou.com/Public/uploads/goods_img/img_size4/201703/m40920d0669855e745d97f9ad1df966ebb.jpg">
-                        <img src="http://www.jinmalvyou.com/Public/uploads/goods_img/img_size2/201703/m20920d0669855e745d97f9ad1df966ebb.jpg">
-                    </a>
-                    <a title="" class="little_img cur_img" data-bigpic="http://www.jinmalvyou.com/Public/uploads/goods_img/img_size4/201703/m49788843d72171643297ccc033d9288ee.jpg">
-                        <img src="http://www.jinmalvyou.com/Public/uploads/goods_img/img_size2/201703/m29788843d72171643297ccc033d9288ee.jpg">
-                    </a>
-                    <a title="" class="little_img" data-bigpic="http://www.jinmalvyou.com/Public/uploads/goods_img/img_size4/201703/m4531a8dbceefa2c44e6d0e35627cd2689.jpg">
-                        <img src="http://www.jinmalvyou.com/Public/uploads/goods_img/img_size2/201703/m2531a8dbceefa2c44e6d0e35627cd2689.jpg">
-                    </a>
-                    <a title="" class="little_img" data-bigpic="http://www.jinmalvyou.com/Public/uploads/goods_img/img_size4/201703/m46d8cb900e9f6c0a762aca19eae40c00c.jpg">
-                        <img src="http://www.jinmalvyou.com/Public/uploads/goods_img/img_size2/201703/m26d8cb900e9f6c0a762aca19eae40c00c.jpg">
-                    </a>
-                    <a title="" class="little_img" data-bigpic="http://www.jinmalvyou.com/Public/uploads/goods_img/img_size4/201703/m45ea00f6eba562a767b5095bbf8cffe07.jpg" style="display:none;">
-                        <img src="http://www.jinmalvyou.com/Public/uploads/goods_img/img_size2/201703/m25ea00f6eba562a767b5095bbf8cffe07.jpg">
-                    </a>
-                    <a title="" class="little_img" data-bigpic="http://www.jinmalvyou.com/Public/uploads/goods_img/img_size4/201703/m4265ec488cd1bc7ce749bc8c9b34b87bc.jpg" style="display:none;">
-                        <img src="http://www.jinmalvyou.com/Public/uploads/goods_img/img_size2/201703/m2265ec488cd1bc7ce749bc8c9b34b87bc.jpg">
-                    </a>
-                    <a title="" class="little_img" data-bigpic="http://www.jinmalvyou.com/Public/uploads/goods_img/img_size4/201703/m4e7e964909d7dd1a9f6e5494d4dc0c847.jpg" style="display:none;">
-                        <img src="http://www.jinmalvyou.com/Public/uploads/goods_img/img_size2/201703/m2e7e964909d7dd1a9f6e5494d4dc0c847.jpg">
-                    </a>
-                    <a title="" class="little_img" data-bigpic="http://www.jinmalvyou.com/Public/uploads/goods_img/img_size4/201703/m467db00e1b76718fab0fe8b96e10f4d35.jpg" style="display:none;">
-                        <img src="http://www.jinmalvyou.com/Public/uploads/goods_img/img_size2/201703/m267db00e1b76718fab0fe8b96e10f4d35.jpg">
-                    </a>
-                    <a title="" class="little_img" data-bigpic="http://www.jinmalvyou.com/Public/uploads/goods_img/img_size4/201703/m487bbbc6e43eba6aa6a36cc1a182f7a20.jpg" style="display:none;">
-                        <img src="http://www.jinmalvyou.com/Public/uploads/goods_img/img_size2/201703/m287bbbc6e43eba6aa6a36cc1a182f7a20.jpg">
-                    </a>
-                    <a class="down_img down_img_disable" style="margin-bottom: 0;"></a>
-                </dd>
+
             </dl>
             <div class="prosum_right">
                <p class="pros_title">【尾单特卖】全国-曼谷6-7天自由行 泰国出境旅游 特价往返机票自由行二次确认</p>
@@ -66,13 +35,13 @@
                     <p>地址 ： 传智播客黑马程序员</p>  
                 </div>
                 <div class="pros_price">
-                    <p class="price"><strong>¥2699.00</strong><span>起</span></p>
+                    <p class="price" ><strong id="rprice">¥2699.00</strong><span>起</span></p>
                     <p class="collect">
 						   <span>
 								<a class="btn"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>
 								<a  class="btn already" disabled="disabled"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>
 							</span>
-                        <span>已收藏100次</span>
+                        <span id="rcount">已收藏100次</span>
                     </p>
                 </div>        
             </div>
@@ -113,38 +82,92 @@
     <script type="text/javascript" src="js/include.js"></script>
     <script>
     $(document).ready(function() {
+        showRouteDeatils();
+    });
+
+    function showRouteDeatils() {
+        //从地址栏获取rid的值
+        let rid = getParameter("rid");
+        //访问服务器，获取一条线路显示
+        $.get({
+            url: "route",
+            data: {
+                action: "findRouteByRid",   //方法名
+                rid: rid   //线路的rid
+            },
+            success:function (route) {  //返回封装了4张表的route对象
+                //取出category对象
+                let category = route.category;
+                //显示面包屑导航
+                var html = `<a href="index.html">首页</a>
+                <span> &gt;</span><a href="route_list.html?cid=${category.cid}">${category.cname}</a><span> &gt;</span>
+                ${route.rname}`;
+                //显示在div容器中
+                $("div.bread_box").html(html);
+                //右侧详情
+                $("p.pros_title").text(route.rname);
+                $("p.hot").text(route.routeIntroduce);
+               //商家信息
+                let seller= route.seller;
+                $("div.pros_other").html(`<p>经营商家  ：${seller.sname}</p>
+                    <p>咨询电话 : ${seller.consphone}</p>
+                    <p>地址 ： ${seller.address}</p>`);
+                $("#rprice").html("&yen;" +route.price);
+                $("#rcount").text("已收藏"+route.count+"次");
+
+                /*左边的图片,大于4的显示小于4的隐藏有个hidde标签*/
+                let routeImages = route.routeImgList;
+              let left=`<dt><img alt="" class="big_img" src="${routeImages[0].bigPic}"></dt><dd><a class="up_img up_img_disable"></a>`;
+
+                for (let i = 0; i < routeImages.length; i++) {
+                    let routeImg = routeImages[i];
+                    if (i<4){
+                        left+=`<a title="" class="little_img"  data-bigpic="${routeImg.bigPic}"><img src="${routeImg.smallPic}"></a>`
+                    }else {
+                        left+=`<a title="" class="little_img" data-bigpic="${routeImg.bigPic}" style="display:none;">
+<img src="{routeImg.smallPic}"></a>`
+                    }
+                }
+               left += `<a class="down_img down_img_disable" style="margin-bottom: 0;"></a></dd></dl>`;
+                $("dl.prosum_left").html(left);
+                playAni();
+            }
+        });
+
+    }
+    function playAni() {
         //焦点图效果
         //点击图片切换图片
-        $('.little_img').on('mousemove', function() {
+        $('.little_img').on('mousemove', function () {
             $('.little_img').removeClass('cur_img');
             var big_pic = $(this).data('bigpic');
             $('.big_img').attr('src', big_pic);
             $(this).addClass('cur_img');
         });
-           //上下切换
+        //上下切换
         var picindex = 0;
         var nextindex = 4;
-        $('.down_img').on('click',function(){
+        $('.down_img').on('click', function () {
             var num = $('.little_img').length;
-            if((nextindex + 1) <= num){
-                $('.little_img:eq('+picindex+')').hide();
-                $('.little_img:eq('+nextindex+')').show();
+            if ((nextindex + 1) <= num) {
+                $('.little_img:eq(' + picindex + ')').hide();
+                $('.little_img:eq(' + nextindex + ')').show();
                 picindex = picindex + 1;
                 nextindex = nextindex + 1;
             }
         });
-        $('.up_img').on('click',function(){
+        $('.up_img').on('click', function () {
             var num = $('.little_img').length;
-            if(picindex > 0){
-                $('.little_img:eq('+(nextindex-1)+')').hide();
-                $('.little_img:eq('+(picindex-1)+')').show();
+            if (picindex > 0) {
+                $('.little_img:eq(' + (nextindex - 1) + ')').hide();
+                $('.little_img:eq(' + (picindex - 1) + ')').show();
                 picindex = picindex - 1;
                 nextindex = nextindex - 1;
             }
         });
         //自动播放
-        // var timer = setInterval("auto_play()", 5000);
-    });
+        var timer = setInterval("auto_play()", 5000);
+    }
 
     //自动轮播方法
     function auto_play() {
@@ -168,6 +191,7 @@
             $('.big_img').attr('src', big_pic);
         }
     }
+
     </script>
 </body>
 
