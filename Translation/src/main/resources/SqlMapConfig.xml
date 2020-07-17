@@ -4,6 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+    <settings>
+        <!--显示查询语句-->
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+    </settings>
     <!--定义实体类别名-->
     <typeAliases>
         <package name="com.itheima.entity"/>

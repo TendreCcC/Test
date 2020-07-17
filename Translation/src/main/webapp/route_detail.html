@@ -37,9 +37,9 @@
                 <div class="pros_price">
                     <p class="price" ><strong id="rprice">¥2699.00</strong><span>起</span></p>
                     <p class="collect">
-						   <span>
-								<a class="btn"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>
-								<a  class="btn already" disabled="disabled"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>
+						   <span id="spanFav">
+								<!--<a class="btn"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>
+								<a  class="btn already" disabled="disabled"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>-->
 							</span>
                         <span id="rcount">已收藏100次</span>
                     </p>
@@ -83,11 +83,12 @@
     <script>
     $(document).ready(function() {
         showRouteDeatils();
-    });
 
+    });
+    var rid = getParameter("rid");
     function showRouteDeatils() {
         //从地址栏获取rid的值
-        let rid = getParameter("rid");
+        //var rid = getParameter("rid");
         //访问服务器，获取一条线路显示
         $.get({
             url: "route",
@@ -130,11 +131,57 @@
                 }
                left += `<a class="down_img down_img_disable" style="margin-bottom: 0;"></a></dd></dl>`;
                 $("dl.prosum_left").html(left);
+                favoriteStatus(rid);
                 playAni();
+
             }
         });
 
     }
+    //判断按钮是否可用
+    function favoriteStatus(rid) {
+
+        $.get({
+            url: "route",  //访问地址
+            data: {
+                action: "findFavoriteByRidAndUserId",  //方法名
+                rid: rid
+            },
+            success: function (flag) {   //获取服务器返回的值
+                //flag为true表示不可用，false表示可用
+                if (flag) {
+                    $("#spanFav").html(`<a class="btn already" disabled="disabled"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>`);
+                }
+                else {
+                    $("#spanFav").html(`<a class="btn" id="btnAddFav"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>`);
+                    //添加点击事件
+                    $("#btnAddFav").click(function () {
+                        //发送请求收藏线路
+                        $.get({
+                            url: "favorite",
+                            data: {
+                                action: "addFavorite",
+                                rid: rid
+                            },
+                            success:function (data) {  //操作结果：1. false表示没有登录 2.数字返回收藏人数
+                                if (data == false) {
+                                    //没有登录，跳转到登录页面
+                                    alert("收藏前请先登录");
+                                    location.href = "login.html";
+                                } else {  //是一个数字，表示添加成功  is Not a Number 非数字返回true
+                                    //显示在页面上
+                                    $("p.collect>span:last").text("已收藏" + data.count + "次");
+                                    //按钮不可用
+                                     $("#spanFav").html(`<a class="btn already" disabled="disabled"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>`);
+                                }
+                            }
+                        });
+                    });
+                }
+            }
+        });
+    }
+
     function playAni() {
         //焦点图效果
         //点击图片切换图片

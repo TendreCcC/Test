@@ -104,7 +104,7 @@
              $("div.page_num_inf").html(`<i></i> 共 <span>${json.pages}</span>页<span>${json.total}</span>条`)
             /* 分页的插件*/
              $("ul.pagination").jqPaginator({
-                   totalCounts:json.pages,
+                   totalCounts:json.total,
                     pageSize:json.pageSize,
                  currentPage:json.pageNum,
                  onPageChange: function (num,type) {
@@ -156,7 +156,7 @@
                 $("div.page_num_inf").html(`<i></i> 共 <span>${json.pages}</span>页<span>${json.total}</span>条`)
                 /* 分页的插件*/
                 $("ul.pagination").jqPaginator({
-                    totalCounts:json.pages,
+                    totalCounts:json.total,
                     pageSize:json.pageSize,
                     currentPage:json.pageNum,
                     onPageChange: function (num,type) {
