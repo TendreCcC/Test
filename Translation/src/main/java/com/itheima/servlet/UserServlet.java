@@ -89,7 +89,6 @@ public class UserServlet extends BaseServlet {
         response.setContentType("text/plain;charset=utf-8");
         HttpSession session = request.getSession();
         PrintWriter out = response.getWriter();
-
         //获取的是验证码里面的值
         String vcode = (String) session.getAttribute("vcode");//网页的验证码
         String check = request.getParameter("check");//用户输入的验证码
