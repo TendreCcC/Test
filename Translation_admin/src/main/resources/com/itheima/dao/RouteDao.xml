@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace:命名空间,指定接口完全限定名-->
+<mapper namespace="com.itheima.dao.RouteDao">
+    <!--
+id:表示接口中方法名
+resultType:表示方法返回的数据类型,如果返回的是集合,这里要指定集合中每个元素的类型
+rname like "%" '双飞' "%" order by rid desc
+-->
+
+
+    <select id="findListByPage" resultType="com.itheima.entity.Route">
+      select * from tab_route
+      <where>
+      <if test="rname !=null and rname!=''" >
+          rname like "%" #{rname} "%"
+      </if>
+      </where>
+        order by rid desc
+    </select>
+
+</mapper>
